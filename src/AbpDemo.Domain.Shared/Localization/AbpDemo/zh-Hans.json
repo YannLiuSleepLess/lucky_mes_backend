@@ -1,0 +1,29 @@
+{
+  "culture": "zh-Hans",
+  "texts": {
+    "AppName": "AbpDemo",
+    "Menu:Home": "首页",
+    "Menu:Products": "产品管理",
+    "Menu:Processes": "工艺路线",
+    "Menu:Changes": "工程变更",
+    "Welcome": "欢迎",
+    "LongWelcomeMessage": "欢迎使用本应用程序。这是一个基于 ABP 框架的启动项目。更多信息，请访问 abp.io。",
+    
+    "Enum:ProductType.RawMaterial": "原材料",
+    "Enum:ProductType.Component": "零部件",
+    "Enum:ProductType.FinishedGood": "成品",
+    "Enum:ProductType.Auxiliary": "辅料",
+    
+    "Enum:BomType.EBOM": "设计BOM",
+    "Enum:BomType.MBOM": "制造BOM",
+    "Enum:BomType.PBOM": "工艺BOM",
+    
+    "Enum:ProcessRouteStatus.Draft": "草稿",
+    "Enum:ProcessRouteStatus.Published": "已发布",
+    "Enum:ProcessRouteStatus.Archived": "已归档",
+    
+    "Enum:ChangeType.BomChange": "BOM变更",
+    "Enum:ChangeType.ProcessChange": "工艺变更",
+    "Enum:ChangeType.Both": "两者都有"
+  }
+}

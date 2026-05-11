@@ -1,0 +1,29 @@
+{
+  "culture": "en",
+  "texts": {
+    "AppName": "AbpDemo",
+    "Menu:Home": "Home",
+    "Menu:Products": "Products",
+    "Menu:Processes": "Process Routes",
+    "Menu:Changes": "Engineering Changes",
+    "Welcome": "Welcome",
+    "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io.",
+    
+    "Enum:ProductType.RawMaterial": "Raw Material",
+    "Enum:ProductType.Component": "Component",
+    "Enum:ProductType.FinishedGood": "Finished Good",
+    "Enum:ProductType.Auxiliary": "Auxiliary",
+    
+    "Enum:BomType.EBOM": "EBOM",
+    "Enum:BomType.MBOM": "MBOM",
+    "Enum:BomType.PBOM": "PBOM",
+    
+    "Enum:ProcessRouteStatus.Draft": "Draft",
+    "Enum:ProcessRouteStatus.Published": "Published",
+    "Enum:ProcessRouteStatus.Archived": "Archived",
+    
+    "Enum:ChangeType.BomChange": "BOM Change",
+    "Enum:ChangeType.ProcessChange": "Process Change",
+    "Enum:ChangeType.Both": "Both"
+  }
+}
