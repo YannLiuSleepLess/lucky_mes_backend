@@ -6,6 +6,5 @@ public class AbpDemoEntityFrameworkCoreFixture : IDisposable
 {
     public void Dispose()
     {
-
     }
 }

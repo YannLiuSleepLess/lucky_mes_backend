@@ -8,5 +8,4 @@ namespace AbpDemo;
 )]
 public class AbpDemoDomainTestModule : AbpModule
 {
-
 }

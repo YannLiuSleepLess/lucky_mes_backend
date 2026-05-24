@@ -18,7 +18,7 @@ namespace AbpDemo.EntityFrameworkCore;
     typeof(AbpDemoApplicationTestModule),
     typeof(AbpDemoEntityFrameworkCoreModule),
     typeof(AbpEntityFrameworkCoreSqliteModule)
-    )]
+)]
 public class AbpDemoEntityFrameworkCoreTestModule : AbpModule
 {
     private SqliteConnection? _sqliteConnection;
@@ -51,10 +51,7 @@ public class AbpDemoEntityFrameworkCoreTestModule : AbpModule
 
         services.Configure<AbpDbContextOptions>(options =>
         {
-            options.Configure(context =>
-            {
-                context.DbContextOptions.UseSqlite(_sqliteConnection);
-            });
+            options.Configure(context => { context.DbContextOptions.UseSqlite(_sqliteConnection); });
         });
     }
 

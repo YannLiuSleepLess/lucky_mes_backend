@@ -6,5 +6,4 @@ namespace AbpDemo.EntityFrameworkCore.Applications;
 [Collection(AbpDemoTestConsts.CollectionDefinitionName)]
 public class EfCoreSampleAppServiceTests : SampleAppServiceTests<AbpDemoEntityFrameworkCoreTestModule>
 {
-
 }

@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Shouldly;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Shouldly;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Identity;
 using Xunit;
@@ -32,13 +32,13 @@ public class SampleRepositoryTests : AbpDemoEntityFrameworkCoreTestBase
          */
         await WithUnitOfWorkAsync(async () =>
         {
-                //Act
-                var adminUser = await (await _appUserRepository.GetQueryableAsync())
+            //Act
+            var adminUser = await (await _appUserRepository.GetQueryableAsync())
                 .Where(u => u.UserName == "admin")
                 .FirstOrDefaultAsync();
 
-                //Assert
-                adminUser.ShouldNotBeNull();
+            //Assert
+            adminUser.ShouldNotBeNull();
         });
     }
 }
