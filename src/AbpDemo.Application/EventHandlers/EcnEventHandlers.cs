@@ -4,7 +4,7 @@ using AbpDemo.Engineering.Changes.Events;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EventBus.Distributed;
 
-namespace AbpDemo.Application.EventHandlers;
+namespace AbpDemo.EventHandlers;
 
 public class EcnApprovedEventHandler : IDistributedEventHandler<EcnApprovedEvent>, ITransientDependency
 {

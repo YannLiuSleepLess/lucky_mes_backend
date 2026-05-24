@@ -2,13 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AbpDemo.Engineering.Changes.Aggregates;
+using AbpDemo.Engineering.Changes.Repositories;
 using AbpDemo.EntityFrameworkCore;
 using AbpDemo.Enums;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 
-namespace AbpDemo.Engineering.Changes;
+namespace AbpDemo.Repositories;
 
 public class EngineeringChangeRepository : EfCoreRepository<AbpDemoDbContext, EngineeringChange, Guid>,
     IEngineeringChangeRepository

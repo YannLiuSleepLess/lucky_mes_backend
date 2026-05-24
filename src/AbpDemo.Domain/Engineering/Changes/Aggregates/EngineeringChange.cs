@@ -5,7 +5,7 @@ using AbpDemo.Enums;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
 
-namespace AbpDemo.Engineering.Changes;
+namespace AbpDemo.Engineering.Changes.Aggregates;
 
 /// <summary>
 /// 工程变更单 (ECN) 聚合根

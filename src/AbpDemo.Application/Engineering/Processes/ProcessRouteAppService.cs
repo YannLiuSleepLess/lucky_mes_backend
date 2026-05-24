@@ -7,7 +7,6 @@ using AbpDemo.Engineering.Processes.Dtos;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Entities;
-using Volo.Abp.Domain.Repositories;
 
 namespace AbpDemo.Engineering.Processes;
 
@@ -40,6 +39,7 @@ public class ProcessRouteAppService(
         {
             throw new EntityNotFoundException($"工艺路线不存在，ID: {id}");
         }
+
         return ObjectMapper.Map<ProcessRoute, ProcessRouteDto>(entity);
     }
 

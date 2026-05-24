@@ -191,7 +191,7 @@ public class ProductAppService : AbpDemoAppService, IProductAppService
 
         // 使用反射或重新创建的方式更新（因为 BomItem 是子实体，没有公开 setter）
         // 这里采用先删除再添加的方式
-        
+
         // 查询组件产品名称（冗余字段）
         var queryable = await _productRepository.GetQueryableAsync();
         var componentProduct = await AsyncExecuter.FirstOrDefaultAsync(
@@ -201,7 +201,7 @@ public class ProductAppService : AbpDemoAppService, IProductAppService
         {
             throw new EntityNotFoundException(typeof(Product), input.ComponentProductId);
         }
-        
+
         version.RemoveBomItem(bomItemId);
         version.AddBomItem(
             input.ComponentProductId,
@@ -243,7 +243,7 @@ public class ProductAppService : AbpDemoAppService, IProductAppService
             {
                 throw new EntityNotFoundException(typeof(Product), itemDto.ComponentProductId);
             }
-            
+
             version.AddBomItem(
                 itemDto.ComponentProductId,
                 componentProduct.ProductName, // 冗余字段

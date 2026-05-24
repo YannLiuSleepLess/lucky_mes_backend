@@ -65,7 +65,8 @@ public class ProductVersion : Entity<Guid>
     /// <summary>
     /// 添加 BOM 项到该版本
     /// </summary>
-    public BomItem AddBomItem(Guid componentProductId, string componentProductName, decimal quantity, decimal scrapRate = 0,
+    public BomItem AddBomItem(Guid componentProductId, string componentProductName, decimal quantity,
+        decimal scrapRate = 0,
         string unit = null, int sequence = 0, Guid? parentItemId = null, decimal? yieldRate = null)
     {
         if (quantity <= 0) throw new ArgumentException("用量必须大于0");

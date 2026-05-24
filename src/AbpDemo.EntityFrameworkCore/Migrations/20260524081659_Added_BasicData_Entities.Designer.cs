@@ -4,6 +4,7 @@ using AbpDemo.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Volo.Abp.EntityFrameworkCore;
 
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace AbpDemo.Migrations
 {
     [DbContext(typeof(AbpDemoDbContext))]
-    partial class AbpDemoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260524081659_Added_BasicData_Entities")]
+    partial class Added_BasicData_Entities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

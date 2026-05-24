@@ -25,7 +25,8 @@ public class BomItem : Entity<Guid>
     {
     }
 
-    public BomItem(Guid id, Guid productVersionId, Guid componentProductId, string componentProductName, decimal quantity, decimal scrapRate,
+    public BomItem(Guid id, Guid productVersionId, Guid componentProductId, string componentProductName,
+        decimal quantity, decimal scrapRate,
         string unit, int sequence, Guid? parentItemId = null, decimal? yieldRate = null) : base(id)
     {
         ProductVersionId = productVersionId;

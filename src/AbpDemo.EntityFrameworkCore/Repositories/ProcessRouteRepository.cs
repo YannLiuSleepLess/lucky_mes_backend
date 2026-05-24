@@ -56,12 +56,12 @@ public class ProcessRouteRepository : EfCoreRepository<AbpDemoDbContext, Process
     {
         var dbSet = await GetDbSetAsync();
         var query = dbSet.Where(r => r.RouteCode == routeCode);
-        
+
         if (excludeId.HasValue)
         {
             query = query.Where(r => r.Id != excludeId.Value);
         }
-        
+
         return !await query.AnyAsync();
     }
 }

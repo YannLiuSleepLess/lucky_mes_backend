@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AbpDemo.Engineering.Processes;
@@ -58,7 +57,7 @@ public class PhotovoltaicProcessRouteDataSeedContributor : IDataSeedContributor,
         // --- 2. 硅片工艺路线（由硅棒切割而成）---
         if (productDict.TryGetValue("SF-20002", out var wafer))
         {
-            await CreateWaferProcessRouteAsync(wafer.Id, 
+            await CreateWaferProcessRouteAsync(wafer.Id,
                 productDict.ContainsKey("SF-20001") ? productDict["SF-20001"].Id : Guid.Empty);
         }
 
@@ -103,17 +102,17 @@ public class PhotovoltaicProcessRouteDataSeedContributor : IDataSeedContributor,
 
         // OP10: 配料工序
         var step10 = route.AddStep("OP10", "多晶硅料配料", standardTime: 30m, isCritical: false);
-        
+
         // OP20: 装料工序
         var step20 = route.AddStep("OP20", "石英坩埚装料", standardTime: 45m, isCritical: true);
-        
+
         // OP30: 拉晶工序（关键工序）
         var step30 = route.AddStep("OP30", "单晶拉制", standardTime: 720m, isCritical: true);
         // 配置工艺参数示例：拉晶温度、拉速等
-        
+
         // OP40: 冷却工序
         var step40 = route.AddStep("OP40", "缓慢冷却", standardTime: 180m, isCritical: true);
-        
+
         // OP50: 外观检测
         var step50 = route.AddStep("OP50", "硅棒外观检测", standardTime: 15m, isCritical: false,
             isInspectionRequired: true, inspectionType: InspectionType.Final);
@@ -152,9 +151,9 @@ public class PhotovoltaicProcessRouteDataSeedContributor : IDataSeedContributor,
         var step40 = route.AddStep("OP40", "硅片厚度分选", standardTime: 20m, isCritical: false);
         step40.ConfigureAsSortingStep(
             sortingType: SortType.Thickness,
-            thresholdA: 160m,  // A级：厚度≤160μm
-            thresholdB: 170m,  // B级：厚度≤170μm
-            thresholdC: 180m,  // C级：厚度≤180μm
+            thresholdA: 160m, // A级：厚度≤160μm
+            thresholdB: 170m, // B级：厚度≤170μm
+            thresholdC: 180m, // C级：厚度≤180μm
             nextStepForGradeA: null, // A/B/C级都流向下一工序
             nextStepForGradeB: null,
             nextStepForGradeC: null
@@ -204,9 +203,9 @@ public class PhotovoltaicProcessRouteDataSeedContributor : IDataSeedContributor,
         var step70 = route.AddStep("OP70", "电池片效率分选", standardTime: 20m, isCritical: true);
         step70.ConfigureAsSortingStep(
             sortingType: SortType.Efficiency,
-            thresholdA: 22.5m,  // A级：效率≥22.5%
-            thresholdB: 21.0m,  // B级：效率≥21.0%
-            thresholdC: 19.5m,  // C级：效率≥19.5%
+            thresholdA: 22.5m, // A级：效率≥22.5%
+            thresholdB: 21.0m, // B级：效率≥21.0%
+            thresholdC: 19.5m, // C级：效率≥19.5%
             nextStepForGradeA: null, // A/B/C级都流向包装
             nextStepForGradeB: null,
             nextStepForGradeC: null
@@ -223,7 +222,8 @@ public class PhotovoltaicProcessRouteDataSeedContributor : IDataSeedContributor,
     /// 创建组件工艺路线（适用于500W和550W）
     /// 工艺流程：电池片分选 → 焊接 → 叠层 → 层压 → 装框 → 接线盒 → 固化 → 测试 → 包装
     /// </summary>
-    private async Task CreateModuleProcessRouteAsync(Guid productId, string routeCode, string routeName, Guid inputProductId)
+    private async Task CreateModuleProcessRouteAsync(Guid productId, string routeCode, string routeName,
+        Guid inputProductId)
     {
         var route = new ProcessRoute(
             Guid.NewGuid(),
@@ -261,20 +261,20 @@ public class PhotovoltaicProcessRouteDataSeedContributor : IDataSeedContributor,
 
         // OP90: 功率测试分选（光伏特有 - 关键工序）
         var step90 = route.AddStep("OP90", "组件功率测试分选", standardTime: 15m, isCritical: true);
-        
+
         // 根据组件功率设置分选阈值（500W或550W）
         decimal powerThresholdA, powerThresholdB, powerThresholdC;
         if (routeCode.Contains("30001")) // 500W组件
         {
-            powerThresholdA = 500m;  // A级：≥500W
-            powerThresholdB = 495m;  // B级：≥495W
-            powerThresholdC = 490m;  // C级：≥490W
+            powerThresholdA = 500m; // A级：≥500W
+            powerThresholdB = 495m; // B级：≥495W
+            powerThresholdC = 490m; // C级：≥490W
         }
         else // 550W组件
         {
-            powerThresholdA = 550m;  // A级：≥550W
-            powerThresholdB = 545m;  // B级：≥545W
-            powerThresholdC = 540m;  // C级：≥540W
+            powerThresholdA = 550m; // A级：≥550W
+            powerThresholdB = 545m; // B级：≥545W
+            powerThresholdC = 540m; // C级：≥540W
         }
 
         step90.ConfigureAsSortingStep(

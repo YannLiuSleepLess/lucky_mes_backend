@@ -1,4 +1,6 @@
-using AbpDemo.Engineering.Changes;
+using AbpDemo.BasicData.WorkCenters.Aggregates;
+using AbpDemo.BasicData.Workshops.Aggregates;
+using AbpDemo.Engineering.Changes.Aggregates;
 using AbpDemo.Engineering.Processes;
 using AbpDemo.Engineering.Products;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +37,10 @@ public class AbpDemoDbContext :
     public DbSet<ProcessParameter> ProcessParameters { get; set; }
     public DbSet<ProcessDocument> ProcessDocuments { get; set; }
     public DbSet<EngineeringChange> EngineeringChanges { get; set; }
+
+    // Basic Data
+    public DbSet<Workshop> Workshops { get; set; }
+    public DbSet<WorkCenter> WorkCenters { get; set; }
 
     #region Entities from the modules
 
@@ -222,6 +228,29 @@ public class AbpDemoDbContext :
             b.Property(x => x.EcnNo).IsRequired().HasMaxLength(50);
             b.Property(x => x.Title).IsRequired().HasMaxLength(200);
             b.HasIndex(x => x.EcnNo).IsUnique();
+        });
+
+        // Basic Data
+        builder.Entity<Workshop>(b =>
+        {
+            b.ToTable(AbpDemoConsts.DbTablePrefix + "Workshops", AbpDemoConsts.DbSchema);
+            b.Property(x => x.WorkshopCode).IsRequired().HasMaxLength(50);
+            b.Property(x => x.WorkshopName).IsRequired().HasMaxLength(200);
+            b.Property(x => x.Location).HasMaxLength(200);
+            b.HasIndex(x => x.WorkshopCode).IsUnique();
+        });
+
+        builder.Entity<WorkCenter>(b =>
+        {
+            b.ToTable(AbpDemoConsts.DbTablePrefix + "WorkCenters", AbpDemoConsts.DbSchema);
+            b.Property(x => x.WorkCenterCode).IsRequired().HasMaxLength(50);
+            b.Property(x => x.WorkCenterName).IsRequired().HasMaxLength(200);
+            b.HasIndex(x => x.WorkCenterCode).IsUnique();
+
+            b.HasOne<Workshop>()
+                .WithMany()
+                .HasForeignKey(w => w.WorkshopId)
+                .OnDelete(DeleteBehavior.Restrict);
         });
     }
 }
