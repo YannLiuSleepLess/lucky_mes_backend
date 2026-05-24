@@ -3,9 +3,13 @@
   "texts": {
     "AppName": "AbpDemo",
     "Menu:Home": "首页",
+    "Menu:Engineering": "工程管理",
     "Menu:Products": "产品管理",
     "Menu:Processes": "工艺路线",
     "Menu:Changes": "工程变更",
+    "Menu:BasicData": "基础数据",
+    "Menu:Workshops": "车间管理",
+    "Menu:WorkCenters": "工作中心",
     "Welcome": "欢迎",
     "LongWelcomeMessage": "欢迎使用本应用程序。这是一个基于 ABP 框架的启动项目。更多信息，请访问 abp.io。",
     

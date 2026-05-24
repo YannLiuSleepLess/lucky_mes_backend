@@ -3,9 +3,13 @@
   "texts": {
     "AppName": "AbpDemo",
     "Menu:Home": "Home",
+    "Menu:Engineering": "Engineering",
     "Menu:Products": "Products",
     "Menu:Processes": "Process Routes",
     "Menu:Changes": "Engineering Changes",
+    "Menu:BasicData": "BasicData",
+    "Menu:Workshops": "Workshops",
+    "Menu:WorkCenters": "WorkCenters",
     "Welcome": "Welcome",
     "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io.",
     
