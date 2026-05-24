@@ -17,18 +17,29 @@ public class ProcessRouteAppService(
     public async Task<PagedResultDto<ProcessRouteDto>> GetListAsync(PagedAndSortedResultRequestDto input)
     {
         var queryable = await processRouteRepository.GetQueryableAsync();
-        // 注意：如果需要查询包含 Steps 的数据，需要使用 Include
+        
+        // 使用投影查询，只获取需要的字段和步骤数量，不加载完整的 Steps 集合
         var query = queryable
             .OrderBy(input.Sorting.IsNullOrWhiteSpace() ? "CreationTime DESC" : input.Sorting)
             .Skip(input.SkipCount)
-            .Take(input.MaxResultCount);
+            .Take(input.MaxResultCount)
+            .Select(r => new ProcessRouteDto
+            {
+                Id = r.Id,
+                RouteCode = r.RouteCode,
+                RouteName = r.RouteName,
+                ProductId = r.ProductId,
+                Version = r.Version,
+                Status = r.Status,
+                StepCount = r.Steps.Count
+            });
 
         var list = await AsyncExecuter.ToListAsync(query);
         var totalCount = await AsyncExecuter.CountAsync(queryable);
 
         return new PagedResultDto<ProcessRouteDto>(
             totalCount,
-            ObjectMapper.Map<List<ProcessRoute>, List<ProcessRouteDto>>(list)
+            list
         );
     }
 
