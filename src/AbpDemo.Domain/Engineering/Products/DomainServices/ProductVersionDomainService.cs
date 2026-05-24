@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AbpDemo.Engineering.Products;
+using AbpDemo.Engineering.DomainServices;
+using AbpDemo.Engineering.Products.Repositories;
 using AbpDemo.Enums;
 using Volo.Abp.Domain.Services;
 
-namespace AbpDemo.Engineering.DomainServices;
+namespace AbpDemo.Engineering.Products.DomainServices;
 
 /// <summary>
 /// 产品版本领域服务实现

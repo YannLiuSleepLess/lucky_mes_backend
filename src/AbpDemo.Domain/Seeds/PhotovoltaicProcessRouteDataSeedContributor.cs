@@ -2,14 +2,14 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using AbpDemo.Engineering.Processes;
-using AbpDemo.Engineering.Products;
+using AbpDemo.Engineering.Products.Aggregates;
 using AbpDemo.Enums;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Uow;
 
-namespace AbpDemo.Domain.Seeds;
+namespace AbpDemo.Seeds;
 
 /// <summary>
 /// 光伏MES系统工艺路线数据种子贡献者

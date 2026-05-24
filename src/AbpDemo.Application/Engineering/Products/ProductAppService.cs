@@ -3,6 +3,7 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using AbpDemo.Domain.Shared.ValueObjects;
+using AbpDemo.Engineering.Products.Aggregates;
 using AbpDemo.Engineering.Products.Dtos;
 using AbpDemo.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -143,6 +144,7 @@ public class ProductAppService : AbpDemoAppService, IProductAppService
 
         // 在版本上添加 BOM 项
         version.AddBomItem(
+            input.BomCode,
             input.ComponentProductId,
             componentProduct.ProductName, // 冗余字段
             input.Quantity,
@@ -204,6 +206,7 @@ public class ProductAppService : AbpDemoAppService, IProductAppService
 
         version.RemoveBomItem(bomItemId);
         version.AddBomItem(
+            input.BomCode,
             input.ComponentProductId,
             componentProduct.ProductName, // 冗余字段
             input.Quantity,
@@ -245,6 +248,7 @@ public class ProductAppService : AbpDemoAppService, IProductAppService
             }
 
             version.AddBomItem(
+                itemDto.BomCode,
                 itemDto.ComponentProductId,
                 componentProduct.ProductName, // 冗余字段
                 itemDto.Quantity,

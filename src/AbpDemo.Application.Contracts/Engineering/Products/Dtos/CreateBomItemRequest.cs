@@ -4,6 +4,7 @@ namespace AbpDemo.Engineering.Products.Dtos;
 
 public class CreateBomItemRequest
 {
+    public string BomCode { get; set; }
     public Guid? ParentItemId { get; set; }
     public Guid ComponentProductId { get; set; }
     public decimal Quantity { get; set; }

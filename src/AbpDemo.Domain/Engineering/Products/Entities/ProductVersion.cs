@@ -65,7 +65,7 @@ public class ProductVersion : Entity<Guid>
     /// <summary>
     /// 添加 BOM 项到该版本
     /// </summary>
-    public BomItem AddBomItem(Guid componentProductId, string componentProductName, decimal quantity,
+    public BomItem AddBomItem(string bomCode, Guid componentProductId, string componentProductName, decimal quantity,
         decimal scrapRate = 0,
         string unit = null, int sequence = 0, Guid? parentItemId = null, decimal? yieldRate = null)
     {
@@ -82,6 +82,7 @@ public class ProductVersion : Entity<Guid>
         var item = new BomItem(
             Guid.NewGuid(),
             Id, // ProductVersionId
+            bomCode,
             componentProductId,
             componentProductName, // 冗余字段
             quantity,

@@ -7,6 +7,7 @@ using AbpDemo.Domain.Shared.ValueObjects;
 using AbpDemo.Engineering.Processes;
 using AbpDemo.Engineering.Processes.Dtos;
 using AbpDemo.Engineering.Products;
+using AbpDemo.Engineering.Products.Aggregates;
 using AbpDemo.Engineering.Products.Dtos;
 using AutoMapper;
 

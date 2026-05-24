@@ -1,14 +1,17 @@
 using System;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
+using Volo.Abp.MultiTenancy;
 
 namespace AbpDemo.BasicData.WorkCenters.Aggregates;
 
 /// <summary>
 /// 工作中心聚合根
 /// </summary>
-public class WorkCenter : FullAuditedAggregateRoot<Guid>
+public class WorkCenter : FullAuditedAggregateRoot<Guid>, IMultiTenant
 {
+    public Guid? TenantId { get; private set; }
+
     /// <summary>
     /// 工作中心编码（格式：WC-{WorkshopCode}-{SEQ}）
     /// </summary>

@@ -1,4 +1,5 @@
 using System;
+using Volo.Abp;
 using Volo.Abp.Domain.Entities;
 
 namespace AbpDemo.Engineering.Products;
@@ -8,6 +9,11 @@ namespace AbpDemo.Engineering.Products;
 /// </summary>
 public class BomItem : Entity<Guid>
 {
+    /// <summary>
+    /// BOM项编码（格式：BOM-{ProductCode}-{SEQ}）
+    /// </summary>
+    public string BomCode { get; private set; }
+
     public Guid ProductVersionId { get; private set; } // 指向产品版本，不是产品
     public Guid? ParentItemId { get; private set; } // 自引用，支持树形结构
     public Guid ComponentProductId { get; private set; } // 关联的组件产品ID
@@ -25,10 +31,11 @@ public class BomItem : Entity<Guid>
     {
     }
 
-    public BomItem(Guid id, Guid productVersionId, Guid componentProductId, string componentProductName,
+    public BomItem(Guid id, Guid productVersionId, string bomCode, Guid componentProductId, string componentProductName,
         decimal quantity, decimal scrapRate,
         string unit, int sequence, Guid? parentItemId = null, decimal? yieldRate = null) : base(id)
     {
+        SetBomCode(bomCode);
         ProductVersionId = productVersionId;
         ComponentProductId = componentProductId;
         ComponentProductName = componentProductName ?? throw new ArgumentNullException(nameof(componentProductName));
@@ -39,6 +46,14 @@ public class BomItem : Entity<Guid>
         ParentItemId = parentItemId;
         Level = parentItemId.HasValue ? 2 : 1; // 简化处理，实际应由领域服务计算
         SetYieldRate(yieldRate);
+    }
+
+    public void SetBomCode(string bomCode)
+    {
+        if (string.IsNullOrWhiteSpace(bomCode))
+            throw new BusinessException("BOM编码不能为空");
+
+        BomCode = bomCode.Trim();
     }
 
     public void SetQuantity(decimal quantity)

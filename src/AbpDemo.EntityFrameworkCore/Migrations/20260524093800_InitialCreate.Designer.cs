@@ -13,7 +13,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace AbpDemo.Migrations
 {
     [DbContext(typeof(AbpDemoDbContext))]
-    [Migration("20260510123143_InitialCreate")]
+    [Migration("20260524093800_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -27,7 +27,170 @@ namespace AbpDemo.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
-            modelBuilder.Entity("AbpDemo.Engineering.Changes.EngineeringChange", b =>
+            modelBuilder.Entity("AbpDemo.BasicData.WorkCenters.Aggregates.WorkCenter", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("char(36)");
+
+                    b.Property<int>("Capacity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("varchar(40)")
+                        .HasColumnName("ConcurrencyStamp");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<string>("ExtraProperties")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("ExtraProperties");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint(1)")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<int>("ShiftCount")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("TenantId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("TenantId");
+
+                    b.Property<string>("WorkCenterCode")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("WorkCenterName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<Guid>("WorkshopId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WorkshopId");
+
+                    b.HasIndex("TenantId", "WorkCenterCode")
+                        .IsUnique();
+
+                    b.ToTable("MesWorkCenters", (string)null);
+                });
+
+            modelBuilder.Entity("AbpDemo.BasicData.Workshops.Aggregates.Workshop", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("varchar(40)")
+                        .HasColumnName("ConcurrencyStamp");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<string>("ExtraProperties")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnName("ExtraProperties");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint(1)")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<Guid?>("ManagerId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid?>("TenantId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("TenantId");
+
+                    b.Property<string>("WorkshopCode")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("WorkshopName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId", "WorkshopCode")
+                        .IsUnique();
+
+                    b.ToTable("MesWorkshops", (string)null);
+                });
+
+            modelBuilder.Entity("AbpDemo.Engineering.Changes.Aggregates.EngineeringChange", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("char(36)");
@@ -116,6 +279,10 @@ namespace AbpDemo.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("TenantId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("TenantId");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -126,7 +293,7 @@ namespace AbpDemo.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EcnNo")
+                    b.HasIndex("TenantId", "EcnNo")
                         .IsUnique();
 
                     b.ToTable("MesEngineeringChanges", (string)null);
@@ -302,6 +469,10 @@ namespace AbpDemo.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("TenantId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("TenantId");
+
                     b.Property<decimal>("TotalStandardTime")
                         .HasColumnType("decimal(65,30)");
 
@@ -312,7 +483,7 @@ namespace AbpDemo.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RouteCode")
+                    b.HasIndex("TenantId", "RouteCode")
                         .IsUnique();
 
                     b.ToTable("MesProcessRoutes", (string)null);
@@ -410,53 +581,7 @@ namespace AbpDemo.Migrations
                     b.ToTable("MesProcessSteps", (string)null);
                 });
 
-            modelBuilder.Entity("AbpDemo.Engineering.Products.BomItem", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("ComponentProductId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("ComponentProductName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("Level")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("ParentItemId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("ProductVersionId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<decimal>("Quantity")
-                        .HasColumnType("decimal(65,30)");
-
-                    b.Property<decimal>("ScrapRate")
-                        .HasColumnType("decimal(65,30)");
-
-                    b.Property<int>("Sequence")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Unit")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<decimal?>("YieldRate")
-                        .HasColumnType("decimal(65,30)")
-                        .HasColumnName("YieldRate");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductVersionId");
-
-                    b.ToTable("MesBomItems", (string)null);
-                });
-
-            modelBuilder.Entity("AbpDemo.Engineering.Products.Product", b =>
+            modelBuilder.Entity("AbpDemo.Engineering.Products.Aggregates.Product", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("char(36)");
@@ -526,6 +651,10 @@ namespace AbpDemo.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("varchar(200)");
 
+                    b.Property<Guid?>("TenantId")
+                        .HasColumnType("char(36)")
+                        .HasColumnName("TenantId");
+
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
@@ -539,10 +668,64 @@ namespace AbpDemo.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductCode")
+                    b.HasIndex("TenantId", "ProductCode")
                         .IsUnique();
 
                     b.ToTable("MesProducts", (string)null);
+                });
+
+            modelBuilder.Entity("AbpDemo.Engineering.Products.BomItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("BomCode")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<Guid>("ComponentProductId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("ComponentProductName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("ParentItemId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("ProductVersionId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("ScrapRate")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<int>("Sequence")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Unit")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<decimal?>("YieldRate")
+                        .HasColumnType("decimal(65,30)")
+                        .HasColumnName("YieldRate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BomCode")
+                        .IsUnique();
+
+                    b.HasIndex("ProductVersionId");
+
+                    b.ToTable("MesBomItems", (string)null);
                 });
 
             modelBuilder.Entity("AbpDemo.Engineering.Products.ProductVersion", b =>
@@ -2374,6 +2557,15 @@ namespace AbpDemo.Migrations
                     b.ToTable("AbpTenantConnectionStrings", (string)null);
                 });
 
+            modelBuilder.Entity("AbpDemo.BasicData.WorkCenters.Aggregates.WorkCenter", b =>
+                {
+                    b.HasOne("AbpDemo.BasicData.Workshops.Aggregates.Workshop", null)
+                        .WithMany()
+                        .HasForeignKey("WorkshopId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("AbpDemo.Engineering.Processes.ProcessDocument", b =>
                 {
                     b.HasOne("AbpDemo.Engineering.Processes.ProcessRoute", null)
@@ -2433,16 +2625,7 @@ namespace AbpDemo.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("AbpDemo.Engineering.Products.BomItem", b =>
-                {
-                    b.HasOne("AbpDemo.Engineering.Products.ProductVersion", null)
-                        .WithMany("BomItems")
-                        .HasForeignKey("ProductVersionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("AbpDemo.Engineering.Products.Product", b =>
+            modelBuilder.Entity("AbpDemo.Engineering.Products.Aggregates.Product", b =>
                 {
                     b.OwnsOne("AbpDemo.Domain.Shared.ValueObjects.ProductSpecification", "Specification", b1 =>
                         {
@@ -2487,9 +2670,18 @@ namespace AbpDemo.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("AbpDemo.Engineering.Products.BomItem", b =>
+                {
+                    b.HasOne("AbpDemo.Engineering.Products.ProductVersion", null)
+                        .WithMany("BomItems")
+                        .HasForeignKey("ProductVersionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("AbpDemo.Engineering.Products.ProductVersion", b =>
                 {
-                    b.HasOne("AbpDemo.Engineering.Products.Product", null)
+                    b.HasOne("AbpDemo.Engineering.Products.Aggregates.Product", null)
                         .WithMany("Versions")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2647,7 +2839,7 @@ namespace AbpDemo.Migrations
                     b.Navigation("Steps");
                 });
 
-            modelBuilder.Entity("AbpDemo.Engineering.Products.Product", b =>
+            modelBuilder.Entity("AbpDemo.Engineering.Products.Aggregates.Product", b =>
                 {
                     b.Navigation("Versions");
                 });

@@ -5,6 +5,7 @@ namespace AbpDemo.Engineering.Products.Dtos;
 public class BomItemDto
 {
     public Guid Id { get; set; }
+    public string BomCode { get; set; }
     public Guid? ParentItemId { get; set; }
     public Guid ComponentProductId { get; set; }
     public string ComponentProductName { get; set; } // 冗余字段，方便前端展示

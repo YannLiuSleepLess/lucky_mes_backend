@@ -3,12 +3,14 @@ using AbpDemo.BasicData.Workshops.Aggregates;
 using AbpDemo.Engineering.Changes.Aggregates;
 using AbpDemo.Engineering.Processes;
 using AbpDemo.Engineering.Products;
+using AbpDemo.Engineering.Products.Aggregates;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
@@ -99,7 +101,7 @@ public class AbpDemoDbContext :
             b.ToTable(AbpDemoConsts.DbTablePrefix + "Products", AbpDemoConsts.DbSchema);
             b.Property(x => x.ProductCode).IsRequired().HasMaxLength(50);
             b.Property(x => x.ProductName).IsRequired().HasMaxLength(200);
-            b.HasIndex(x => x.ProductCode).IsUnique();
+            b.HasIndex(x => new { x.TenantId, x.ProductCode }).IsUnique();
 
             // 光伏特有字段
             b.Property(x => x.IsSerialTraced).HasColumnName("IsSerialTraced").HasDefaultValue(false);
@@ -121,6 +123,8 @@ public class AbpDemoDbContext :
                 .WithOne()
                 .HasForeignKey(v => v.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            b.ConfigureByConvention();
         });
 
         builder.Entity<ProductVersion>(b =>
@@ -134,15 +138,21 @@ public class AbpDemoDbContext :
                 .WithOne()
                 .HasForeignKey(i => i.ProductVersionId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            b.ConfigureByConvention();
         });
 
         builder.Entity<BomItem>(b =>
         {
             b.ToTable(AbpDemoConsts.DbTablePrefix + "BomItems", AbpDemoConsts.DbSchema);
+            b.Property(x => x.BomCode).IsRequired().HasMaxLength(50);
+            b.HasIndex(x => x.BomCode).IsUnique();
             b.Property(x => x.Unit).HasMaxLength(20);
 
             // 光伏特有字段
             b.Property(x => x.YieldRate).HasColumnName("YieldRate");
+
+            b.ConfigureByConvention();
         });
 
         builder.Entity<ProcessRoute>(b =>
@@ -151,7 +161,7 @@ public class AbpDemoDbContext :
             b.Property(x => x.RouteCode).IsRequired().HasMaxLength(50);
             b.Property(x => x.RouteName).IsRequired().HasMaxLength(200);
             b.Property(x => x.Version).IsRequired().HasMaxLength(20);
-            b.HasIndex(x => x.RouteCode).IsUnique();
+            b.HasIndex(x => new { x.TenantId, x.RouteCode }).IsUnique();
 
             // 配置一对多关系
             b.HasMany(p => p.Steps)
@@ -168,6 +178,8 @@ public class AbpDemoDbContext :
                 .WithOne()
                 .HasForeignKey(d => d.ProcessRouteId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            b.ConfigureByConvention();
         });
 
         builder.Entity<ProcessStep>(b =>
@@ -188,6 +200,8 @@ public class AbpDemoDbContext :
             b.Property(x => x.InputProductId).HasColumnName("InputProductId");
             b.Property(x => x.OutputProductId).HasColumnName("OutputProductId");
             b.Property(x => x.YieldRate).HasColumnName("YieldRate");
+
+            b.ConfigureByConvention();
         });
 
         builder.Entity<ProcessParameter>(b =>
@@ -212,6 +226,8 @@ public class AbpDemoDbContext :
             b.Property(x => x.USL).HasColumnName("USL");
             b.Property(x => x.LSL).HasColumnName("LSL");
             b.Property(x => x.SamplingIntervalSeconds).HasColumnName("SamplingIntervalSeconds");
+
+            b.ConfigureByConvention();
         });
 
         builder.Entity<ProcessDocument>(b =>
@@ -220,6 +236,8 @@ public class AbpDemoDbContext :
             b.Property(x => x.DocumentName).IsRequired().HasMaxLength(200);
             b.Property(x => x.FilePath).HasMaxLength(500);
             b.Property(x => x.Version).HasMaxLength(20);
+
+            b.ConfigureByConvention();
         });
 
         builder.Entity<EngineeringChange>(b =>
@@ -227,7 +245,9 @@ public class AbpDemoDbContext :
             b.ToTable(AbpDemoConsts.DbTablePrefix + "EngineeringChanges", AbpDemoConsts.DbSchema);
             b.Property(x => x.EcnNo).IsRequired().HasMaxLength(50);
             b.Property(x => x.Title).IsRequired().HasMaxLength(200);
-            b.HasIndex(x => x.EcnNo).IsUnique();
+            b.HasIndex(x => new { x.TenantId, x.EcnNo }).IsUnique();
+
+            b.ConfigureByConvention();
         });
 
         // Basic Data
@@ -237,7 +257,9 @@ public class AbpDemoDbContext :
             b.Property(x => x.WorkshopCode).IsRequired().HasMaxLength(50);
             b.Property(x => x.WorkshopName).IsRequired().HasMaxLength(200);
             b.Property(x => x.Location).HasMaxLength(200);
-            b.HasIndex(x => x.WorkshopCode).IsUnique();
+            b.HasIndex(x => new { x.TenantId, x.WorkshopCode }).IsUnique();
+
+            b.ConfigureByConvention();
         });
 
         builder.Entity<WorkCenter>(b =>
@@ -245,12 +267,14 @@ public class AbpDemoDbContext :
             b.ToTable(AbpDemoConsts.DbTablePrefix + "WorkCenters", AbpDemoConsts.DbSchema);
             b.Property(x => x.WorkCenterCode).IsRequired().HasMaxLength(50);
             b.Property(x => x.WorkCenterName).IsRequired().HasMaxLength(200);
-            b.HasIndex(x => x.WorkCenterCode).IsUnique();
+            b.HasIndex(x => new { x.TenantId, x.WorkCenterCode }).IsUnique();
 
             b.HasOne<Workshop>()
                 .WithMany()
                 .HasForeignKey(w => w.WorkshopId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            b.ConfigureByConvention();
         });
     }
 }

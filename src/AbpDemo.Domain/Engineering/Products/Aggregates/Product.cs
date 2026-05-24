@@ -5,14 +5,16 @@ using System.Text.RegularExpressions;
 using AbpDemo.Domain.Shared.ValueObjects;
 using AbpDemo.Enums;
 using Volo.Abp.Domain.Entities.Auditing;
+using Volo.Abp.MultiTenancy;
 
-namespace AbpDemo.Engineering.Products;
+namespace AbpDemo.Engineering.Products.Aggregates;
 
 /// <summary>
 /// 产品聚合根
 /// </summary>
-public class Product : FullAuditedAggregateRoot<Guid>
+public class Product : FullAuditedAggregateRoot<Guid>, IMultiTenant
 {
+    public Guid? TenantId { get; private set; }
     public string ProductCode { get; private set; }
     public string ProductName { get; private set; }
     public ProductType Type { get; private set; }
@@ -157,6 +159,7 @@ public class Product : FullAuditedAggregateRoot<Guid>
         foreach (var item in previousVersion.BomItems)
         {
             newVersion.AddBomItem(
+                item.BomCode,
                 item.ComponentProductId,
                 item.ComponentProductName, // 冗余字段
                 item.Quantity,

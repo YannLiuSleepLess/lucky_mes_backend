@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AbpDemo.Engineering.Products.Aggregates;
 using AbpDemo.Enums;
 using Volo.Abp.Domain.Repositories;
 
-namespace AbpDemo.Engineering.Products;
+namespace AbpDemo.Engineering.Products.Repositories;
 
 public interface IProductRepository : IRepository<Product, Guid>
 {

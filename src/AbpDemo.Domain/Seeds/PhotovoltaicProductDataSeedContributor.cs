@@ -1,14 +1,14 @@
 using System;
 using System.Threading.Tasks;
 using AbpDemo.Domain.Shared.ValueObjects;
-using AbpDemo.Engineering.Products;
+using AbpDemo.Engineering.Products.Aggregates;
 using AbpDemo.Enums;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Uow;
 
-namespace AbpDemo.Domain.Seeds;
+namespace AbpDemo.Seeds;
 
 /// <summary>
 /// 光伏MES系统产品数据种子贡献者
@@ -113,51 +113,68 @@ public class PhotovoltaicProductDataSeedContributor : IDataSeedContributor, ITra
 
         // --- 硅棒的BOM（由多晶硅料制成）---
         var ingotVersion = ingot.CreateNewVersion(BomType.MBOM, "初始版本");
-        ingotVersion.AddBomItem(polySilicon.Id, polySilicon.ProductName, quantity: 2.5m, scrapRate: 0.02m, unit: "KG",
+        ingotVersion.AddBomItem("BOM-SF20001-010", polySilicon.Id, polySilicon.ProductName, quantity: 2.5m,
+            scrapRate: 0.02m, unit: "KG",
             sequence: 10);
 
         // --- 硅片的BOM（由硅棒切割而成）---
         var waferVersion = wafer.CreateNewVersion(BomType.MBOM, "初始版本");
-        waferVersion.AddBomItem(ingot.Id, ingot.ProductName, quantity: 0.001m, scrapRate: 0.03m, unit: "PCS",
+        waferVersion.AddBomItem("BOM-SF20002-010", ingot.Id, ingot.ProductName, quantity: 0.001m, scrapRate: 0.03m,
+            unit: "PCS",
             sequence: 10, yieldRate: 1000m); // 1根硅棒产出1000片
 
         // --- 电池片的BOM（由硅片加工而成）---
         var cellVersion = cell.CreateNewVersion(BomType.MBOM, "初始版本");
-        cellVersion.AddBomItem(wafer.Id, wafer.ProductName, quantity: 1m, scrapRate: 0.05m, unit: "PCS", sequence: 10,
+        cellVersion.AddBomItem("BOM-SF20003-010", wafer.Id, wafer.ProductName, quantity: 1m, scrapRate: 0.05m,
+            unit: "PCS", sequence: 10,
             yieldRate: 1m);
-        cellVersion.AddBomItem(silverPaste.Id, silverPaste.ProductName, quantity: 0.05m, scrapRate: 0.02m, unit: "G",
+        cellVersion.AddBomItem("BOM-SF20003-020", silverPaste.Id, silverPaste.ProductName, quantity: 0.05m,
+            scrapRate: 0.02m, unit: "G",
             sequence: 20); // 正面银浆
-        cellVersion.AddBomItem(aluminumPaste.Id, aluminumPaste.ProductName, quantity: 0.08m, scrapRate: 0.02m,
+        cellVersion.AddBomItem("BOM-SF20003-030", aluminumPaste.Id, aluminumPaste.ProductName, quantity: 0.08m,
+            scrapRate: 0.02m,
             unit: "G", sequence: 30); // 背面铝浆
 
         // --- 500W组件的BOM ---
         var module500WVersion = module500W.CreateNewVersion(BomType.MBOM, "初始版本");
-        module500WVersion.AddBomItem(cell.Id, cell.ProductName, quantity: 72m, scrapRate: 0.02m, unit: "PCS",
+        module500WVersion.AddBomItem("BOM-FG30001-010", cell.Id, cell.ProductName, quantity: 72m, scrapRate: 0.02m,
+            unit: "PCS",
             sequence: 10); // 72片电池
-        module500WVersion.AddBomItem(temperedGlass.Id, temperedGlass.ProductName, quantity: 1m, scrapRate: 0.01m,
+        module500WVersion.AddBomItem("BOM-FG30001-020", temperedGlass.Id, temperedGlass.ProductName, quantity: 1m,
+            scrapRate: 0.01m,
             unit: "PCS", sequence: 20);
-        module500WVersion.AddBomItem(evaFilm.Id, evaFilm.ProductName, quantity: 2m, scrapRate: 0.01m, unit: "PCS",
+        module500WVersion.AddBomItem("BOM-FG30001-030", evaFilm.Id, evaFilm.ProductName, quantity: 2m, scrapRate: 0.01m,
+            unit: "PCS",
             sequence: 30); // 上下两层
-        module500WVersion.AddBomItem(backSheet.Id, backSheet.ProductName, quantity: 1m, scrapRate: 0.01m, unit: "PCS",
+        module500WVersion.AddBomItem("BOM-FG30001-040", backSheet.Id, backSheet.ProductName, quantity: 1m,
+            scrapRate: 0.01m, unit: "PCS",
             sequence: 40);
-        module500WVersion.AddBomItem(alFrame.Id, alFrame.ProductName, quantity: 4m, scrapRate: 0.01m, unit: "PCS",
+        module500WVersion.AddBomItem("BOM-FG30001-050", alFrame.Id, alFrame.ProductName, quantity: 4m, scrapRate: 0.01m,
+            unit: "PCS",
             sequence: 50); // 4根边框
-        module500WVersion.AddBomItem(junctionBox.Id, junctionBox.ProductName, quantity: 1m, scrapRate: 0.005m,
+        module500WVersion.AddBomItem("BOM-FG30001-060", junctionBox.Id, junctionBox.ProductName, quantity: 1m,
+            scrapRate: 0.005m,
             unit: "PCS", sequence: 60);
 
         // --- 550W组件的BOM ---
         var module550WVersion = module550W.CreateNewVersion(BomType.MBOM, "初始版本");
-        module550WVersion.AddBomItem(cell.Id, cell.ProductName, quantity: 78m, scrapRate: 0.02m, unit: "PCS",
+        module550WVersion.AddBomItem("BOM-FG30002-010", cell.Id, cell.ProductName, quantity: 78m, scrapRate: 0.02m,
+            unit: "PCS",
             sequence: 10); // 78片电池
-        module550WVersion.AddBomItem(temperedGlass.Id, temperedGlass.ProductName, quantity: 1m, scrapRate: 0.01m,
+        module550WVersion.AddBomItem("BOM-FG30002-020", temperedGlass.Id, temperedGlass.ProductName, quantity: 1m,
+            scrapRate: 0.01m,
             unit: "PCS", sequence: 20);
-        module550WVersion.AddBomItem(evaFilm.Id, evaFilm.ProductName, quantity: 2m, scrapRate: 0.01m, unit: "PCS",
+        module550WVersion.AddBomItem("BOM-FG30002-030", evaFilm.Id, evaFilm.ProductName, quantity: 2m, scrapRate: 0.01m,
+            unit: "PCS",
             sequence: 30);
-        module550WVersion.AddBomItem(backSheet.Id, backSheet.ProductName, quantity: 1m, scrapRate: 0.01m, unit: "PCS",
+        module550WVersion.AddBomItem("BOM-FG30002-040", backSheet.Id, backSheet.ProductName, quantity: 1m,
+            scrapRate: 0.01m, unit: "PCS",
             sequence: 40);
-        module550WVersion.AddBomItem(alFrame.Id, alFrame.ProductName, quantity: 4m, scrapRate: 0.01m, unit: "PCS",
+        module550WVersion.AddBomItem("BOM-FG30002-050", alFrame.Id, alFrame.ProductName, quantity: 4m, scrapRate: 0.01m,
+            unit: "PCS",
             sequence: 50);
-        module550WVersion.AddBomItem(junctionBox.Id, junctionBox.ProductName, quantity: 1m, scrapRate: 0.005m,
+        module550WVersion.AddBomItem("BOM-FG30002-060", junctionBox.Id, junctionBox.ProductName, quantity: 1m,
+            scrapRate: 0.005m,
             unit: "PCS", sequence: 60);
 
         // 保存所有更改

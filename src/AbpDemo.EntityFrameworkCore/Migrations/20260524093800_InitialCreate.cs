@@ -542,6 +542,7 @@ namespace AbpDemo.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    TenantId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     EcnNo = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Title = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
@@ -585,6 +586,7 @@ namespace AbpDemo.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    TenantId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     RouteCode = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     RouteName = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
@@ -620,6 +622,7 @@ namespace AbpDemo.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    TenantId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     ProductCode = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ProductName = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
@@ -654,6 +657,38 @@ namespace AbpDemo.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MesProducts", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "MesWorkshops",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    TenantId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    WorkshopCode = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    WorkshopName = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Location = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ManagerId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    ExtraProperties = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ConcurrencyStamp = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreationTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MesWorkshops", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -1144,6 +1179,44 @@ namespace AbpDemo.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "MesWorkCenters",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    TenantId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    WorkCenterCode = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    WorkCenterName = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    WorkshopId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Capacity = table.Column<int>(type: "int", nullable: false),
+                    ShiftCount = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    ExtraProperties = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ConcurrencyStamp = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreationTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MesWorkCenters", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MesWorkCenters_MesWorkshops_WorkshopId",
+                        column: x => x.WorkshopId,
+                        principalTable: "MesWorkshops",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "OpenIddictAuthorizations",
                 columns: table => new
                 {
@@ -1216,6 +1289,8 @@ namespace AbpDemo.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    BomCode = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     ProductVersionId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     ParentItemId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
                     ComponentProductId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
@@ -1506,14 +1581,20 @@ namespace AbpDemo.Migrations
                 column: "UserName");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MesBomItems_BomCode",
+                table: "MesBomItems",
+                column: "BomCode",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MesBomItems_ProductVersionId",
                 table: "MesBomItems",
                 column: "ProductVersionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MesEngineeringChanges_EcnNo",
+                name: "IX_MesEngineeringChanges_TenantId_EcnNo",
                 table: "MesEngineeringChanges",
-                column: "EcnNo",
+                columns: new[] { "TenantId", "EcnNo" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -1527,9 +1608,9 @@ namespace AbpDemo.Migrations
                 column: "ProcessStepId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MesProcessRoutes_RouteCode",
+                name: "IX_MesProcessRoutes_TenantId_RouteCode",
                 table: "MesProcessRoutes",
-                column: "RouteCode",
+                columns: new[] { "TenantId", "RouteCode" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -1538,15 +1619,32 @@ namespace AbpDemo.Migrations
                 column: "ProcessRouteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MesProducts_ProductCode",
+                name: "IX_MesProducts_TenantId_ProductCode",
                 table: "MesProducts",
-                column: "ProductCode",
+                columns: new[] { "TenantId", "ProductCode" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_MesProductVersions_ProductId",
                 table: "MesProductVersions",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MesWorkCenters_TenantId_WorkCenterCode",
+                table: "MesWorkCenters",
+                columns: new[] { "TenantId", "WorkCenterCode" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MesWorkCenters_WorkshopId",
+                table: "MesWorkCenters",
+                column: "WorkshopId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MesWorkshops_TenantId_WorkshopCode",
+                table: "MesWorkshops",
+                columns: new[] { "TenantId", "WorkshopCode" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_OpenIddictApplications_ClientId",
@@ -1670,6 +1768,9 @@ namespace AbpDemo.Migrations
                 name: "MesProcessSteps");
 
             migrationBuilder.DropTable(
+                name: "MesWorkCenters");
+
+            migrationBuilder.DropTable(
                 name: "OpenIddictScopes");
 
             migrationBuilder.DropTable(
@@ -1695,6 +1796,9 @@ namespace AbpDemo.Migrations
 
             migrationBuilder.DropTable(
                 name: "MesProcessRoutes");
+
+            migrationBuilder.DropTable(
+                name: "MesWorkshops");
 
             migrationBuilder.DropTable(
                 name: "OpenIddictAuthorizations");

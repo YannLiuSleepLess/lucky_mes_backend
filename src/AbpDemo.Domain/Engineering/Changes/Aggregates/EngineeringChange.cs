@@ -4,14 +4,16 @@ using System.Text.Json;
 using AbpDemo.Enums;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
+using Volo.Abp.MultiTenancy;
 
 namespace AbpDemo.Engineering.Changes.Aggregates;
 
 /// <summary>
 /// 工程变更单 (ECN) 聚合根
 /// </summary>
-public class EngineeringChange : FullAuditedAggregateRoot<Guid>
+public class EngineeringChange : FullAuditedAggregateRoot<Guid>, IMultiTenant
 {
+    public Guid? TenantId { get; private set; }
     public string EcnNo { get; private set; }
     public string Title { get; private set; }
     public string Description { get; private set; }

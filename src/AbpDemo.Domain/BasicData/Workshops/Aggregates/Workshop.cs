@@ -1,14 +1,17 @@
 using System;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
+using Volo.Abp.MultiTenancy;
 
 namespace AbpDemo.BasicData.Workshops.Aggregates;
 
 /// <summary>
 /// 车间聚合根
 /// </summary>
-public class Workshop : FullAuditedAggregateRoot<Guid>
+public class Workshop : FullAuditedAggregateRoot<Guid>, IMultiTenant
 {
+    public Guid? TenantId { get; private set; }
+
     /// <summary>
     /// 车间编码（格式：WS-{SEQ}）
     /// </summary>

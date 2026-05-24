@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using AbpDemo.Enums;
 using Volo.Abp.Domain.Entities.Auditing;
+using Volo.Abp.MultiTenancy;
 
 namespace AbpDemo.Engineering.Processes;
 
 /// <summary>
 /// 工艺路线聚合根
 /// </summary>
-public class ProcessRoute : FullAuditedAggregateRoot<Guid>
+public class ProcessRoute : FullAuditedAggregateRoot<Guid>, IMultiTenant
 {
+    public Guid? TenantId { get; private set; }
     public string RouteCode { get; private set; }
     public string RouteName { get; private set; }
     public Guid ProductId { get; private set; }
